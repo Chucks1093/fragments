@@ -23,7 +23,10 @@ import { z } from 'zod';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { useZodValidation } from '@/hooks/useZodValidation';
 import WhipProgress, { type WhipProgressHandle } from './WhipProgress';
-import { useVesselFileManager } from '@/hooks/useVessleFileManager';
+import {
+	useVesselFileManager,
+	type FileSlots,
+} from '@/hooks/useVessleFileManager';
 import { formatFileSize } from '@/utils/file.utils';
 
 // Validation schema
@@ -55,7 +58,11 @@ type FormValues = z.infer<typeof formSchema>;
 
 type SlotKey = 'first' | 'second' | 'third';
 
-function FileUploader() {
+type FileUploaderType = {
+	onClose: (files: FileSlots) => void;
+};
+
+function FileUploader(props: FileUploaderType) {
 	const fileInputRefs = useRef<Record<SlotKey, HTMLInputElement | null>>({
 		first: null,
 		second: null,
@@ -145,6 +152,9 @@ function FileUploader() {
 		whipRef.current?.reset();
 		resetUpload();
 		setIsMinimized(false);
+		if (allFilesCompleted) {
+			props.onClose(files);
+		}
 	};
 
 	// Helper function to get header title
@@ -450,14 +460,18 @@ function FileUploader() {
 						)}
 
 						{allFilesCompleted && !isMinimized && (
-							<motion.button
-								initial={{ opacity: 0, y: 10 }}
-								animate={{ opacity: 1, y: 0 }}
+							<DialogPrimitive.Close
 								onClick={handleResetUploader}
-								className="w-full py-3 mt-5 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-colors"
+								className="w-full  mt-5 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-colors"
 							>
-								Continue
-							</motion.button>
+								<motion.p
+									initial={{ opacity: 0, y: 10 }}
+									animate={{ opacity: 1, y: 0 }}
+									className="border border-red-600 py-3"
+								>
+									Continue
+								</motion.p>
+							</DialogPrimitive.Close>
 						)}
 
 						{showGrid && (
