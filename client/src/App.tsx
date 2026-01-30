@@ -10,7 +10,7 @@ const router = createBrowserRouter(
 	[
 		{
 			path: '/',
-			loader: () => redirect('/coursehub/register'),
+			loader: () => redirect('/vessels'), // or wherever you want default
 		},
 		{
 			path: '/wave',
@@ -38,10 +38,8 @@ const router = createBrowserRouter(
 				},
 			],
 		},
-	],
-	{
-		basename: '/fragments',
-	}
+	]
+	// Remove this: basename: '/fragments'
 );
 
 function App() {
