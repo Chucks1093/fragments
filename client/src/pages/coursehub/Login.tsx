@@ -1,17 +1,15 @@
 import { ScrollArea } from '@/components/ui/scroll-area';
 import FormInput from '@/components/common/FormInput';
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router';
+import { Link } from 'react-router';
 import { Mail } from 'lucide-react';
 import showToast from '@/utils/toast.util';
-import { useProfileStore } from '@/hooks/useProfileStore';
 
 import { z } from 'zod';
 import { useZodValidation } from '@/hooks/useZodValidation';
 import PasswordToggle from '@/components/common/PasswordToggle';
 import CircularSpinner from '@/components/common/CircularSpinnerProps';
 import CheckboxOption from '@/components/common/CheckboxOption';
-import { authService } from '@/services/auth.service';
 const LoginSchema = z.object({
 	email: z.email('Invalid email address'),
 	password: z.string().min(6, 'Password must be at least 6 characters long'),
@@ -21,10 +19,8 @@ const LoginSchema = z.object({
 type LoginData = z.infer<typeof LoginSchema>;
 
 function Login() {
-	const navigate = useNavigate();
 	const initialData = { email: '', password: '' };
 	const [formData, setFormData] = useState<LoginData>(initialData);
-	const { setProfile } = useProfileStore();
 	const { errors, touched, validateAndTouch } = useZodValidation(initialData);
 	const [passwordVisibility, setPasswordVisibility] = useState({
 		password: false,
@@ -55,7 +51,6 @@ function Login() {
 		try {
 			setLoading(true);
 			validateForm();
-			await authService.login();
 		} catch (error) {
 			console.log(error);
 			showToast.error('Login Failed');

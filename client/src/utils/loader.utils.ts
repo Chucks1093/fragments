@@ -1,11 +1,15 @@
+import { authService } from '@/services/auth.service';
+
 export async function loginPageLoader() {
 	try {
 		const userProfile = await authService.getProfile();
 
-		if (userProfile?.data) {
-			// User is already logged in, redirect to dashboard
-			return redirect('/admin/dashboard');
-		}
+		console.log(userProfile);
+
+		// if (userProfile?.data) {
+		// 	// User is already logged in, redirect to dashboard
+		// 	return redirect('/admin/dashboard');
+		// }
 
 		// User not logged in, can access login page
 		return null;

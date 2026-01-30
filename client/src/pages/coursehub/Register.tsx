@@ -10,7 +10,6 @@ import ThirdRegistrationStep from '@/components/coursehub/ThirdRegistrationStep'
 import { useZodValidation } from '@/hooks/useZodValidation';
 import { z } from 'zod';
 import CircularSpinner from '@/components/common/CircularSpinnerProps';
-import { useNavigate } from 'react-router';
 import { authService } from '@/services/auth.service';
 
 const registrationSchema = z
@@ -81,7 +80,6 @@ function Register() {
 
 	const { errors, touched, validateAndTouch, validate, markAllTouched } =
 		useZodValidation(initialData);
-	const navigate = useNavigate();
 
 	const handleSignIn = async (e: React.FormEvent) => {
 		e.preventDefault();

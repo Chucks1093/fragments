@@ -22,7 +22,7 @@ interface RegisterData {
 	password: string;
 }
 
-interface LoginData {
+export interface LoginData {
 	email: string;
 	password: string;
 }
@@ -76,9 +76,8 @@ class AuthService extends BaseApiService {
 	// Get profile - GET /auth/profile
 	async getProfile(): Promise<User> {
 		try {
-			const response = await this.api.get<APIResponse<User>>(
-				'/auth/profile'
-			);
+			const response =
+				await this.api.get<APIResponse<User>>('/auth/profile');
 
 			const user = response.data.data;
 			this.setUser(user);

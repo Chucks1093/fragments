@@ -111,7 +111,7 @@ const FormFileUpload: React.FC<FileUploadProps> = ({
 								day: '2-digit',
 								month: 'short',
 								year: 'numeric',
-						  })
+							})
 						: undefined,
 				};
 
@@ -123,7 +123,7 @@ const FormFileUpload: React.FC<FileUploadProps> = ({
 						? {
 								...prev,
 								progress: Math.min(progress, 100),
-						  }
+							}
 						: null
 				);
 			}
@@ -252,7 +252,7 @@ const FormFileUpload: React.FC<FileUploadProps> = ({
 												? (
 														uploadedFile.size /
 														(1024 * 1024)
-												  ).toFixed(1) + ' MB'
+													).toFixed(1) + ' MB'
 												: '1.1 KB'}{' '}
 											• {uploadedFile?.uploadDate}
 										</p>
